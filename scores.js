@@ -1,4 +1,4 @@
-var scoreList = document.querySelector("#highscore-list");
+var listOfScores = document.querySelector("#listOfScores");
 
 var highscores = {
     initials : [],
@@ -6,10 +6,10 @@ var highscores = {
 }
 
 function getScores() {
-    var storedHighscoresString = localStorage.getItem("highscores");
+    var storeScoreString = localStorage.getItem("highscores");
 
-    if (storedHighscoresString !== null) {
-        var storedHighscores = JSON.parse(storedHighscoresString);
+    if (storeScoreString !== null) {
+        var storedHighscores = JSON.parse(storeScoreString);
         highscores.initials = storedHighscores.initials;
         highscores.scores = storedHighscores.scores;
     }
@@ -19,8 +19,8 @@ function getScores() {
     }
 }
 
-function renderScores() {
-    scoreList.innerHTML = "";
+function showScores() {
+    listOfScores.innerHTML = "";
     
     getScores();
 
@@ -31,11 +31,11 @@ function renderScores() {
         pEl.textContent = (i + 1) + ". " + highscores.initials[i] + " - " + highscores.scores[i];
         
         listEl.appendChild(pEl);
-        scoreList.appendChild(listEl);
+        listOfScores.appendChild(listEl);
     }
 }
 
-function saveScore(newInitials, newScore) {
+function save(newInitials, newScore) {
     getScores();
     
     highscores.initials.push(newInitials);
@@ -45,11 +45,11 @@ function saveScore(newInitials, newScore) {
     localStorage.setItem("highscores", highscoresString);
 }
 
-function clearScores() {
+function clearOut() {
     localStorage.removeItem("highscores");
-    renderScores();
+    showScores();
 }
 
-if (scoreList !== null) {
-    renderScores();
+if (listOfScores !== null) {
+    showScores();
 }
